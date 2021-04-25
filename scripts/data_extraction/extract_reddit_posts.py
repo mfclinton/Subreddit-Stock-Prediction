@@ -45,13 +45,13 @@ class Data_Handler:
                 
 
 
-    def Write_Data(self):
+    def Write_Data(self, force_flush = False):
         subreddit=self.subreddit
         submission_buffer=self.submission_buffer
         comment_buffer=self.comment_buffer
         buffer_size=self.buffer_size
         
-        if buffer_size <= len(submission_buffer):
+        if buffer_size <= len(submission_buffer) or force_flush:
             
             while self.last_submission_name != None and len(submission_buffer) != 0:
                 temp_name = submission_buffer.pop(0)[0] #index 0 is name
@@ -64,7 +64,7 @@ class Data_Handler:
                 submission_df = pd.DataFrame(submission_buffer, columns = submission_columns)
                 submission_df.to_csv(f"{subreddit}_submissions.csv", mode="a", header=False, index=False)
             self.submission_buffer = []
-        if buffer_size <= len(comment_buffer):
+        if buffer_size <= len(comment_buffer) or force_flush:
             
             while self.last_comment_id != None and len(comment_buffer) != 0:
 #                 temp_name = comment_buffer[0][0]
@@ -165,4 +165,4 @@ if __name__=="__main__":
             data_handler.Write_Data()
             cur_date += delta_time
         
-        data_handler.Write_Data() #Flush remaining buffer
+        data_handler.Write_Data(force_flush = True) #Flush remaining buffer
