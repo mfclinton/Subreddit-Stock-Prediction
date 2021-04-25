@@ -4,4 +4,4 @@ numpy==1.20.2
 torch==1.8.1
 sklearn==0.0
 pandas==1.2.4
-pushshift==0.1.2
+psaw==0.1.2
