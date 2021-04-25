@@ -1,0 +1,1 @@
+I ran into a 413 error when extracting WSB comments from very populated posts. I'll fix this later unless someone else wants to - reach out to me if you want to fix this because my code will auto update the CSV starting from the last stored post
