@@ -17,8 +17,8 @@ class Data_Handler:
 
     def Create_CSV(self, initial_date):
         subreddit=self.subreddit
-        submission_csv = f"{subreddit}_submissions.csv"
-        comments_csv = f"{subreddit}_comments.csv"
+        submission_csv = f"data\{subreddit}_submissions.csv"
+        comments_csv = f"data\{subreddit}_comments.csv"
 
         if not os.path.exists(submission_csv):
             with open(submission_csv,"w") as file:
@@ -62,7 +62,7 @@ class Data_Handler:
                     
             if len(submission_buffer) != 0:        
                 submission_df = pd.DataFrame(submission_buffer, columns = submission_columns)
-                submission_df.to_csv(f"{subreddit}_submissions.csv", mode="a", header=False, index=False)
+                submission_df.to_csv(f"data\{subreddit}_submissions.csv", mode="a", header=False, index=False)
             self.submission_buffer = []
         if buffer_size <= len(comment_buffer) or force_flush:
             
@@ -76,7 +76,7 @@ class Data_Handler:
             
             if len(comment_buffer) != 0:
                 comment_df = pd.DataFrame(comment_buffer, columns = comment_columns)
-                comment_df.to_csv(f"{subreddit}_comments.csv", mode="a", header=False, index=False)
+                comment_df.to_csv(f"data\{subreddit}_comments.csv", mode="a", header=False, index=False)
             self.comment_buffer = []
 
 if __name__=="__main__":
