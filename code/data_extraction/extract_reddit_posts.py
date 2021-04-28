@@ -4,6 +4,7 @@ import pprint
 from datetime import datetime, timedelta
 import pandas as pd
 import os
+import time
 
 class Data_Handler:
     def __init__(self, subreddit, buffer_size=1000):
@@ -99,21 +100,21 @@ if __name__=="__main__":
     api = PushshiftAPI(reddit)
 
     subreddit_list = [
-        "securityanalysis",
-        "investing",
-        "stocks",
-        "stockmarket",
-        "economy",
-        "globalmarkets",
-        "dividends",
-        "daytrading",
-        "economy",
-        "wallstreetbets",
+        # "securityanalysis",
+        # "investing",
+        # "stocks",
+        # "stockmarket",
+        # "economy",
+        # "globalmarkets",
+        # "dividends",
+        # "daytrading",
+        # "economy",
+        # "wallstreetbets",
         "options"
     ]
 
     deleted_keywords = ["[deleted]", "[removed]", "", None]
-    submission_columns = ["name", "text", "score", "upvote_ratio", "created_utc"]
+    submission_columns = ["name", "title", "text", "score", "upvote_ratio", "created_utc"]
     comment_columns = ["submission_name", "id", "text", "score", "created_utc"]
 
 
@@ -138,12 +139,15 @@ if __name__=="__main__":
             
             
             for submission in gen:
+                time.sleep(0.01)
+                submission_title = submission.title
                 submission_text = submission.selftext
                 submission_score = submission.score
-                if(submission_text in deleted_keywords or submission_score < min_num_interactions):
+                if(submission_title in deleted_keywords or submission_text in deleted_keywords or submission_score < min_num_interactions):
                     continue
                     
                 data_handler.submission_buffer.append([submission.name, 
+                                        submission.title,
                                         submission_text, 
                                         submission_score, 
                                         submission.upvote_ratio,
