@@ -174,7 +174,7 @@ for i in top_picks:
 
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-picks_ayz = 10 # number of ticks for sentiment analysis
+picks_ayz = 100 # number of ticks for sentiment analysis
 
 # Applying Sentiment Analysis
 scores, sentiment = {}, {}
@@ -206,74 +206,8 @@ for symbol in picks_sentiment:
         scores[symbol][key] = scores[symbol][key] / symbols[symbol]
         scores[symbol][key]  = "{pol:.3f}".format(pol=scores[symbol][key])
  
-print(f"\nSentiment analysis of top {picks_ayz} picks:")
+print(f"\nSentiment analysis of top {picks_ayz} picks with vader")
 df = pd.DataFrame(scores)
 df.index = ['Bearish', 'Neutral', 'Bullish', 'Total/Compound']
 df = df.T
-
-
-# In[34]:
-
-
-df.to_csv("../../data/LabelledData/ExtractedTicks_Labelled.csv")
-
-
-# ## Sentiment Analysis using FinBERT
-
-# In[11]:
-
-
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
-  
-tokenizer = AutoTokenizer.from_pretrained("ProsusAI/finbert")
-
-model = AutoModelForSequenceClassification.from_pretrained("ProsusAI/finbert")
-
-
-# In[ ]:
-
-
-import torch
-
-classes = ["positive", "negative","neutral"]
-
-# sequence_0 = "No they do not, but others only day trade options. If your going to day trade options, stick with In The Money (ITM) or Near The Money (NTM) strikes, with close expiration's, on highly liquid stocks or ETFs. I trade weekly Russel 2000 (IWM) options almost everyday."
-# sequence_1 = "Stocks rallied and the British pound gained."
-# sequence_2 = "TSLA is sacked going into shithole."
-picks_sentiment = list(symbols.keys())[0:picks]
-# Applying Sentiment Analysis
-scores, sentiment = {}, {}
-count = 0
-for symbol in picks_sentiment:
-    stock_texts = a_text[symbol]
-    for text in stock_texts:
-        count = count + 1
-#         print(count,text)
-        inputs = tokenizer.encode_plus(text,add_special_tokens=True, truncation=True, return_tensors="pt")
-        logits = model(**inputs)[0]
-        result = torch.softmax(logits, dim=1).tolist()[0]
-        score = {'neg': result[1], 'neu': result[2], 'pos': result[0]}
-#         print(score)
-        if symbol in sentiment:
-            sentiment[symbol][text] = score
-        else:
-            sentiment[symbol] = {text:score}      
-        if symbol in scores:
-            for key, _ in score.items():
-                scores[symbol][key] += score[key]
-        else:
-            scores[symbol] = score
-            
-    # calculating avg.
-    for key in score:
-        scores[symbol][key] = scores[symbol][key] / symbols[symbol]
-        scores[symbol][key]  = "{pol:.3f}".format(pol=scores[symbol][key])
- 
-print(f"\nSentiment analysis of top {picks} picks:")
-df = pd.DataFrame(scores)
-df.index = ['Bearish', 'Neutral', 'Bullish']
-df = df.T
-
-df.to_csv("../../data/LabelledData/ExtractedTicks_Labelled_FinBERT.csv")
-
-
+print("Sentiment analysis using vader completed.")
