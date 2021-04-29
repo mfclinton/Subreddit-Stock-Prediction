@@ -105,12 +105,11 @@ if __name__=="__main__":
         # "stocks",
         # "stockmarket",
         # "economy",
-        # "globalmarkets",
         # "dividends",
         # "daytrading",
         # "economy",
         # "wallstreetbets",
-        "options"
+        # "options"
     ]
 
     deleted_keywords = ["[deleted]", "[removed]", "", None]
@@ -141,6 +140,7 @@ if __name__=="__main__":
             for submission in gen:
                 time.sleep(0.01)
                 submission_title = submission.title
+                print(submission_title)
                 submission_text = submission.selftext
                 submission_score = submission.score
                 if(submission_title in deleted_keywords or submission_text in deleted_keywords or submission_score < min_num_interactions):

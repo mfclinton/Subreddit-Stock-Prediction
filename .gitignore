@@ -128,3 +128,21 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vscode/settings.json
+
+new_labeled_data/*
+data_jsonl/daytrading_submissions.jsonl
+data_jsonl/dividends_submissions.jsonl
+data_jsonl/economy_submissions.jsonl
+data_jsonl/investing_submissions.jsonl
+data_jsonl/options_submissions.jsonl
+data_jsonl/securityanalysis_submissions.jsonl
+data_jsonl/stockmarket_submissions.jsonl
+data_jsonl/stocks_submissions.jsonl
+DONT_PUSH_DATA_JSONL/daytrading_submissions.jsonl
+DONT_PUSH_DATA_JSONL/dividends_submissions.jsonl
+DONT_PUSH_DATA_JSONL/economy_submissions.jsonl
+DONT_PUSH_DATA_JSONL/investing_submissions.jsonl
+DONT_PUSH_DATA_JSONL/options_submissions.jsonl
+DONT_PUSH_DATA_JSONL/securityanalysis_submissions.jsonl
+DONT_PUSH_DATA_JSONL/stockmarket_submissions.jsonl
+DONT_PUSH_DATA_JSONL/stocks_submissions.jsonl

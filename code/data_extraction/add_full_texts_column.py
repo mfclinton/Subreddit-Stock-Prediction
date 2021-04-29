@@ -7,21 +7,22 @@ import os
 import time
 
 import os
+import jsonlines
 cwd = os.getcwd()
 print(cwd)
 
 subreddit_list = [
-    "securityanalysis",
-    "investing",
-    "stocks",
-    "stockmarket",
-    "economy",
+    # "securityanalysis",
+    # "investing",
+    # "stocks",
+    # "stockmarket",
+    # "economy",
     "globalmarkets",
-    "dividends",
-    "daytrading",
-    "economy",
+    # "dividends",
+    # "daytrading",
+    # "economy",
 #     "wallstreetbets",
-    "options"
+    # "options"
 ]
 
 for subreddit in subreddit_list:
@@ -31,18 +32,14 @@ for subreddit in subreddit_list:
     print(subreddit)
     for idx, row in data.iterrows():
         # print(row)
-        try:
-            full_texts[idx] = row["title"] + "\n\n" + row["text"]
-
-            if(row["title"] == "" or row["title"] == None):
-                1/0
-        except:
-            print(row)
-            1/0
+        full_texts[idx] = {"text": row["title"] + "\n" + row["text"], "label": []}
         if(idx % 1000 == 0):
             print(idx / data.shape[0])
     
 #     insert_idx = len(data.columns)
     insert_idx = 3
+
+    with jsonlines.open(f"{subreddit}_submissions.jsonl", "w") as writer:
+        writer.write_all(full_texts)
     # data.insert(insert_idx, "full_text", full_texts)
-    # data.to_csv(f"{subreddit}_submissions.csv", mode="w", header=True, index=False)
+    # data.to_csv(f"full_text_{subreddit}_submissions.csv", mode="w", header=True, index=False)
