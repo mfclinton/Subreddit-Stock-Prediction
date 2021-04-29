@@ -28,7 +28,7 @@ for filename in os.listdir("data"):
     print(subreddit)
 
     data = pd.read_json(cur_path, lines=True)
-    data["ticker"] = np.nan
+    data["ticker"] = ""
     data["cur_price"] = np.nan
     data["future_price"] = np.nan
 
@@ -58,12 +58,14 @@ for filename in os.listdir("data"):
             #     stock = dr.data.DataReader(ticker, data_source='yahoo', start=start, end=end)
             #     stock.to_pickle(download_path)
 
-            cur_price = stock.iloc[stock.index.get_loc(date, method="nearest")]["Low"] #Note : is rounded to nearest date
-            future_price = stock.iloc[stock.index.get_loc(date + time_interval, method="nearest")]["High"]
+            cur_date = stock.index.get_loc(date, method="nearest")
+            future_date = stock.index.get_loc(date + time_interval, method="nearest")
+            cur_price = stock.iloc[cur_date]["Low"] #Note : is rounded to nearest date
+            future_price = stock.iloc[future_date]["High"]
             
-            data["ticker"] = ticker
-            row["cur_price"] = cur_price
-            row["future_price"] = future_price
+            data.at[idx, "ticker"] = ticker
+            data.at[idx, "cur_price"] = cur_price
+            data.at[idx, "future_price"] = future_price
 
         except Exception:
 
@@ -76,5 +78,6 @@ for filename in os.listdir("data"):
 
 print("Blocked Stocks")
 print(blocked_stocks)
-
+with open("blacklist.txt", "w") as f:
+    f.write("\n".join(list(blocked_stocks.keys())))
 
