@@ -9,7 +9,6 @@ import io
 import pickle
 import pandas_datareader as dr
 
-
 f = open("code/data_labeling/seen.p","rb")
 tickers = list(pickle.load(f))
 print(len(tickers))
