@@ -19,7 +19,7 @@ time_interval = timedelta(weeks=1)
 blocked_stocks = {}
 stocks_data = {}
 for filename in os.listdir("data"):
-    if not filename.endswith("submission.jsonl"):
+    if not filename.endswith(".jsonl"):
         continue
     print(filename)
     
