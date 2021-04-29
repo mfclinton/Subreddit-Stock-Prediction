@@ -17,9 +17,9 @@ end = datetime(2021,1,1)
 time_interval = timedelta(weeks=1)
 
 blocked_stocks = {}
-
+stocks_data = {}
 for filename in os.listdir("data"):
-    if not filename.endswith(".jsonl"):
+    if not filename.endswith("submission.jsonl"):
         continue
     print(filename)
     
@@ -44,13 +44,19 @@ for filename in os.listdir("data"):
 
         date = datetime.utcfromtimestamp(row["created_utc"])
         try:
-            download_path = f"temp/{ticker}.pkl"
-            if os.path.exists(download_path):
-                stock = pd.read_pickle(download_path)
-            else:    
-                # stock = yf.download(ticker, progress=False, start=start, end=end)
+            if ticker in stocks_data:
+                stock = stocks_data[ticker]
+            else:
                 stock = dr.data.DataReader(ticker, data_source='yahoo', start=start, end=end)
-                stock.to_pickle(download_path)
+                stocks_data[ticker] = stock
+
+            # download_path = f"temp/{ticker}.pkl"
+            # if os.path.exists(download_path):
+            #     # stock = pd.read_pickle(download_path)
+            # else:    
+            #     # stock = yf.download(ticker, progress=False, start=start, end=end)
+            #     stock = dr.data.DataReader(ticker, data_source='yahoo', start=start, end=end)
+            #     stock.to_pickle(download_path)
 
             cur_price = stock.iloc[stock.index.get_loc(date, method="nearest")]["Low"] #Note : is rounded to nearest date
             future_price = stock.iloc[stock.index.get_loc(date + time_interval, method="nearest")]["High"]
