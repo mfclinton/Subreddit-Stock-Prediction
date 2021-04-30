@@ -34,7 +34,7 @@ def train(data):
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     loss_function = nn.BCELoss()
 
-    num_epochs = 10
+    num_epochs = 50
     for epoch in range(num_epochs):
         total_loss = 0
         total_accuracy = 0
@@ -52,8 +52,8 @@ def train(data):
             total_loss += loss
             total_accuracy += (predicted_labels == labels).sum() / labels.size()[0]
             # print("Loss : ", loss)
-        print("Avg Loss : ", total_loss / i)
-        print("Avg Accuracy : ", total_accuracy / i)
+        # print("Avg Loss : ", total_loss / i)
+        # print("Avg Accuracy : ", total_accuracy / i)
 
     outputs = model(X_test).squeeze()
     predicted_labels = torch.round(outputs)

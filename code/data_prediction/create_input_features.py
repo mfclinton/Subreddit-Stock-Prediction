@@ -40,7 +40,10 @@ for filename in os.listdir("data"):
         # comments = comment_sentiments.loc[comment_sentiments["name"] == name]
 
         # TODO : Make more complicated
-        feature_vector = submission_sentiment_vector + [float(score), float(upvote_ratio), label]
+        # for i in range(len(submission_sentiment_vector)):
+        #     submission_sentiment_vector[i] *= float(score)
+
+        feature_vector = submission_sentiment_vector + [float(upvote_ratio), label]
         features.append(feature_vector)
 
     data = pd.DataFrame(np.array(features)).to_csv(f"data/{subreddit}_features_labels.csv", index=False)
