@@ -7,9 +7,13 @@ class Prelim_Model(nn.Module):
 
         self.model = nn.Sequential(
             nn.Linear(input_size, hidden_size).double(),
+            nn.BatchNorm1d(hidden_size, affine=False).double(),
             nn.LeakyReLU(0.1),
+            nn.Dropout(p=.2),
             nn.Linear(hidden_size, hidden_size).double(),
+            nn.BatchNorm1d(hidden_size, affine=False).double(),
             nn.LeakyReLU(0.1),
+            nn.Dropout(p=.2),
             nn.Linear(hidden_size, num_outputs).double(),
             nn.Sigmoid()
         )

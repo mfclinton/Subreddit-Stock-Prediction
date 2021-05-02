@@ -25,16 +25,16 @@ def train(data):
     train_dataset = TensorDataset(X_train, y_train)
     # test_dataset = TensorDataset(X_test, y_test)
 
-    train_dataloader = DataLoader(train_dataset, batch_size=20, shuffle=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=10, shuffle=True, drop_last=True)
     # test_dataloader = DataLoader(train_dataset, batch_size=20, shuffle=True)
 
-    model = Prelim_Model(num_features, 20, 1).cuda()
+    model = Prelim_Model(num_features, 64, 1).cuda()
     model.train()
 
-    optimizer = optim.Adam(model.parameters(), lr=1e-3)
+    optimizer = optim.Adam(model.parameters(), lr=1e-4)
     loss_function = nn.BCELoss()
 
-    num_epochs = 50
+    num_epochs = 20
     for epoch in range(num_epochs):
         total_loss = 0
         total_accuracy = 0
@@ -45,6 +45,8 @@ def train(data):
             outputs = model(inputs).squeeze()
             predicted_labels = torch.round(outputs)
             
+            # print(outputs.size(), labels.size())
+            # print(inputs, outputs)
             loss = loss_function(outputs, labels)
             loss.backward()
             optimizer.step()
@@ -73,4 +75,5 @@ if __name__ == "__main__":
             continue
         print(f"--------------{filename}-------------")
         data = pd.read_csv(f"data/{filename}")
+        # print(data)
         train(data)
