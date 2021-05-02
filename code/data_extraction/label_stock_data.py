@@ -50,14 +50,6 @@ for filename in os.listdir("data"):
                 stock = dr.data.DataReader(ticker, data_source='yahoo', start=start, end=end)
                 stocks_data[ticker] = stock
 
-            # download_path = f"temp/{ticker}.pkl"
-            # if os.path.exists(download_path):
-            #     # stock = pd.read_pickle(download_path)
-            # else:    
-            #     # stock = yf.download(ticker, progress=False, start=start, end=end)
-            #     stock = dr.data.DataReader(ticker, data_source='yahoo', start=start, end=end)
-            #     stock.to_pickle(download_path)
-
             cur_date = stock.index.get_loc(date, method="nearest")
             future_date = stock.index.get_loc(date + time_interval, method="nearest")
             cur_price = stock.iloc[cur_date]["Low"] #Note : is rounded to nearest date
