@@ -12,11 +12,11 @@ def train(data):
     # Data Processing
     features = data.to_numpy()[:,:-1]
     labels = data.to_numpy()[:,-1]
-    print("Goes Up Percentage = ", labels.sum() / labels.shape[0])
     num_features = features.shape[1]
 
-    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2)
+    X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, stratify=labels)
 
+    print("Goes Up Percentage = ", y_test.sum() / y_test.shape[0])
     X_train = torch.from_numpy(X_train).cuda()
     X_test = torch.from_numpy(X_test).cuda()
     y_train = torch.from_numpy(y_train).cuda()
@@ -50,14 +50,14 @@ def train(data):
             optimizer.step()
 
             total_loss += loss
-            total_accuracy += (predicted_labels == labels).sum() / labels.size()[0]
+            total_accuracy += torch.true_divide((predicted_labels == labels).sum() , labels.size()[0])
             # print("Loss : ", loss)
         print("Avg Loss : ", total_loss / i)
         print("Avg Accuracy : ", total_accuracy / i)
 
     outputs = model(X_test).squeeze()
     predicted_labels = torch.round(outputs)
-    accuracy = (predicted_labels == y_test).sum() / y_test.size()[0]
+    accuracy = torch.true_divide((predicted_labels == y_test).sum() , y_test.size()[0])
     print("Test Accuracy : ", accuracy)
 
 
