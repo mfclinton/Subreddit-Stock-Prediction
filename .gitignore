@@ -146,5 +146,7 @@ DONT_PUSH_DATA_JSONL/options_submissions.jsonl
 DONT_PUSH_DATA_JSONL/securityanalysis_submissions.jsonl
 DONT_PUSH_DATA_JSONL/stockmarket_submissions.jsonl
 DONT_PUSH_DATA_JSONL/stocks_submissions.jsonl
+pretraining-data/*
+saved_models/*
 
 temp/
