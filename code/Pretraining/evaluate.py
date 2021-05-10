@@ -19,8 +19,8 @@ def evaluate_classification():
     data_dir = Path("data/SentimentData")
     evaluation_filename = "sentiment_test.tsv"
     metric = "f1_macro"
-    lang_model = "cardiffnlp/twitter-roberta-base-sentiment"
-    label_list = ['2', '1', '0']
+    lang_model = "ProsusAI/finbert"
+    label_list = ['2', '0', '1']
 
     # 1.Create a tokenizer
     tokenizer = Tokenizer.load(

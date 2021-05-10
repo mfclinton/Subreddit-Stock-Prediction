@@ -29,11 +29,11 @@ def text_pair_classification(lang_model="ProsusAI/finbert", sdir="saved_models/f
     ##########################
     set_all_seeds(seed=42)
     device, n_gpu = initialize_device_settings(use_cuda=True)
-    n_epochs = 5
+    n_epochs = 7
     lr = 1e-5
     batch_size = 16
     evaluate_every = 100
-    label_list = ['0', '1', '2']
+    label_list = ['2', '0', '1']
 
 
     save_dir = Path(sdir)
@@ -115,9 +115,9 @@ if __name__ == "__main__":
 
     pairs = [
         ('ProsusAI/finbert', 'saved_models/finbert-reddit'),
-        ('saved_models/finbert-finetuned', 'saved_models/finbert-pretrained-reddit'),
-        ('bert-base-cased', 'saved_models/bert-base-cased-reddit'),
-        ('saved_models/bert-english-lm-tutorial', 'saved_models/bert-base-cased-pretrained-reddit')
+        # ('saved_models/finbert-finetuned', 'saved_models/finbert-pretrained-reddit'),
+        # ('bert-base-cased', 'saved_models/bert-base-cased-reddit'),
+        # ('saved_models/bert-english-lm-tutorial', 'saved_models/bert-base-cased-pretrained-reddit')
     ]
     reports = []
     for x, y in pairs:
