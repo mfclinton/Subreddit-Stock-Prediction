@@ -75,5 +75,5 @@ if __name__ == "__main__":
             continue
         print(f"--------------{filename}-------------")
         data = pd.read_csv(f"data/{filename}")
-        # print(data)
+        print(data)
         train(data)
